@@ -28,7 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',            
     'vcm-18217.vm.duke.edu',
-    '67.159.88.254',            
+    '67.159.88.254',
+    '67.159.88.57',            
 ]
 
 
@@ -84,10 +85,10 @@ DATABASES = {
   #'ENGINE': 'django.db.backends.mysql',  
   #'ENGINE': 'django.db.backends.oracle', 
   #'NAME': BASE_DIR / 'db.sqlite3',       
-        'NAME': 'ride_sharing',                      
+        'NAME': 'ride_sharing_db',                      
         'USER': 'develop',                      
         'PASSWORD': 'develop',                
-        'HOST': '127.0.0.1',
+        'HOST': '67.159.88.254',
         'PORT': '5432',                         
     }
 }
