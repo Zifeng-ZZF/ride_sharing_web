@@ -35,3 +35,5 @@ startserver.sh
 
 *~
 *cache*
+
+ride_sharing/settings.py
