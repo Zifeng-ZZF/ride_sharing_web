@@ -85,7 +85,11 @@ DATABASES = {
   #'ENGINE': 'django.db.backends.mysql',  
   #'ENGINE': 'django.db.backends.oracle', 
   #'NAME': BASE_DIR / 'db.sqlite3',       
+<<<<<<< HEAD
         'NAME': 'ride_sharing_db',                      
+=======
+        'NAME': 'ride_sharing_db',     
+>>>>>>> c6a6ab9d6cf112e847f12883044a3e2972c35952
         'USER': 'develop',                      
         'PASSWORD': 'develop',                
         'HOST': '67.159.88.254',
