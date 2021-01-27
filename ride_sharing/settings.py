@@ -25,7 +25,11 @@ SECRET_KEY = 'u#90%rg*rrjsg*(sv@9hdc#d2e!w!b2nb#t1ibei)-6)3oj9*#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',            
+    'vcm-18217.vm.duke.edu',
+    '67.159.88.254',            
+]
 
 
 # Application definition
@@ -75,8 +79,16 @@ WSGI_APPLICATION = 'ride_sharing.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+  #'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+  #'ENGINE': 'django.db.backends.mysql',  
+  #'ENGINE': 'django.db.backends.oracle', 
+  #'NAME': BASE_DIR / 'db.sqlite3',       
+        'NAME': 'ride_sharing',                      
+        'USER': 'develop',                      
+        'PASSWORD': 'develop',                
+        'HOST': '127.0.0.1',
+        'PORT': '5432',                         
     }
 }
 
