@@ -36,6 +36,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'login.apps.LoginConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -80,15 +81,8 @@ WSGI_APPLICATION = 'ride_sharing.wsgi.application'
 
 DATABASES = {
     'default': {
-  #'ENGINE': 'django.db.backends.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-  #'ENGINE': 'django.db.backends.mysql',  
-  #'ENGINE': 'django.db.backends.oracle', 
-  #'NAME': BASE_DIR / 'db.sqlite3',       
-
-        
-        'NAME': 'ride_sharing_db',     
-
+        'NAME': 'ride_sharing_db',
         'USER': 'develop',                      
         'PASSWORD': 'develop',                
         'HOST': '67.159.88.254',

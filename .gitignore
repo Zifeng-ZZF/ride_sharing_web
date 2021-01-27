@@ -1,4 +1,3 @@
-
 # Compiled source #
 ###################
 *.com
@@ -33,7 +32,4 @@ requirements.txt
 runserver.sh
 startserver.sh
 
-*~
-*cache*
-
-ride_sharing/settings.py
+*.pyc
