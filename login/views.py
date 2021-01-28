@@ -56,7 +56,7 @@ def login(request):
             error_message = 'Wrong password！'
             return render(request, 'login/index.html', {'error_message': error_message})
            
-    return render(request, 'login/homepage.html', {'user':user})
+    return render(request, 'mainpage/main.html', {'user':user})
     
 
 #def homepage(request, user_id):
