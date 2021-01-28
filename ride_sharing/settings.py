@@ -37,6 +37,10 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'driver_access.apps.DriverAccessConfig',
+    'request_ride.apps.RequestRideConfig',
+    'join_ride.apps.JoinRideConfig',
+    'my_ride.apps.MyRideConfig',
     'mainpage.apps.MainpageConfig',
     'login.apps.LoginConfig',
     'django.contrib.admin',

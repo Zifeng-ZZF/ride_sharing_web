@@ -18,6 +18,11 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('login.urls')),
     path('login/', include('login.urls')),
     path('main/', include('mainpage.urls')),
+    path('myride/', include('my_ride.urls')),
+    path('join/', include('join_ride.urls')),
+    path('request/', include('request_ride.urls')),
+    path('driver/', include('driver_access.urls')),
 ]
