@@ -10,6 +10,11 @@
 <body>
 
 <a>{{ user.username }}</a>
-
+<form method="get" action="{% url 'main_page:redir' user.id %}">
+    <input type="submit" class="btn" value="My Ride" name="my_ride_btn">
+    <input type="submit" class="btn" value="Request Ride" name="request_ride_btn">
+    <input type="submit" class="btn" value="Join Ride" name="join_ride_btn">
+    <input type="submit" class="btn" value="Driver Access" name="driver_btn">
+</form>
 </body>
 </html>

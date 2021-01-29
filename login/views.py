@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from .models import User
 import hashlib
 
@@ -32,10 +33,10 @@ def register_process(request):
             username=username,
             password=setPassword(password),
             email=email,
-            
         )
         user.save()
-    return render(request, 'login/homepage.html', {'user':user})
+        return HttpResponseRedirect(reverse('main_page:main_pg', args = (user.id,)))
+    return render(request, 'login/index.html', {'error_message': "Not post data,"})
 
 
 def login(request):
@@ -55,8 +56,8 @@ def login(request):
         if password != existed_password:
             error_message = 'Wrong password！'
             return render(request, 'login/index.html', {'error_message': error_message})
-           
-    return render(request, 'mainpage/main.html', {'user':user})
+        return HttpResponseRedirect(reverse('main_page:main_pg', args = (user.id,)))
+    return render(request, 'login/index.html', {'error_message': "Not post data,"})
     
 
 #def homepage(request, user_id):
