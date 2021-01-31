@@ -1,15 +1,4 @@
 from django.db import models
-from enum import Enum
-
-
-class VehicleType(Enum):
-    Sedan = 1,
-    Coupe = 2,
-    SportsCar = 3,
-    SUV = 4,
-    Minivan = 5,
-    PickupTruck = 6,
-    Hatchback = 7
 
 
 # Create your models here.

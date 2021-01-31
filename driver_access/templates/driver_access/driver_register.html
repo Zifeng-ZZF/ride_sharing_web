@@ -26,8 +26,8 @@
                 {% if err_msg %}<h4><b style="color: crimson">{{ err_msg }}</b></h4>{% endif %}
                 <div class="form-group">
                     <label class="info_lb">Vehicle Type</label>
-                    <select name="type_dropdown" class="form-control">
-                        <option value="">Select the type of your vehicle</option>
+                    <select name="vehicle_type" class="form-control">
+                        <option value="10" selected>Select the type of your vehicle</option>
                         <option value="0">Sedan</option>
                         <option value="1">Coupe</option>
                         <option value="2">Sports Car</option>
@@ -36,28 +36,29 @@
                         <option value="5">Pickup Truck</option>
                         <option value="6">Hatchback</option>
                     </select>
+                    {% if err_vtype %}<label style="color: red">{{ "please select a type" }}</label>{% endif %}
                 </div>
 
                 <div class="form-group">
                     <label class="info_lb">Plate number</label>
-                    <input name="plate" placeholder="your plate no." class="form-control" type="text">
+                    <input name="plate" placeholder="your plate no." maxlength="10" class="form-control" type="text" required>
+                    {% if err_plate %}<label style="color: red">{{ "illegal characters. Please enter only letters and numbers." }}</label>{% endif %}
                 </div>
 
                 <div class="form-group">
                     <label class="info_lb">Capacity</label>
-                    <input name="capacity" placeholder="maximum" class="form-control" type="text">
+                    <input name="capacity" placeholder="maximum passengers"  maxlength="3" class="form-control" type="text" required>
+                    {% if err_cap %}<label style="color: red">{{ "illegal capacity. Please only enter positive number." }}</label>{% endif %}
                 </div>
 
                 <!-- Button -->
                 <div class="form-group">
-                    <button type="submit" class="btn btn-warning">
+                    <button type="submit" class="btn btn-warning" name="register" id="register">
                         Register
-                        <span class="glyphicon glyphicon-send"></span>
                     </button>
-                    <button type="button" class="btn btn-secondary">
+                    <a class="btn btn-secondary" href="{% url 'main_page:main_pg' user.id %}" name="cancel" id="cancel">
                         Cancel
-                        <span class="glyphicon glyphicon-send"></span>
-                    </button>
+                    </a>
                 </div>
 
             </fieldset>
