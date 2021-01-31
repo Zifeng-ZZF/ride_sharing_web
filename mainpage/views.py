@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
 from login.models import User
 
@@ -24,7 +24,7 @@ def direct_func_buttons(request, user_id):
     try:
         user = User.objects.get(pk=user_id)
     except User.DoesNotExist:
-        return render(request, 'login/index.html', {})
+        return render(request, 'login/index.html', {'error_message': "Username not exist."})
     else:
         if request.GET.get('my_ride_btn'):
             return HttpResponseRedirect(reverse('my_ride:my_ride', args=(user_id,)))

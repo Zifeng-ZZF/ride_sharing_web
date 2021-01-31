@@ -21,13 +21,13 @@ def setPassword(password):
     
         
 def register_process(request):
-    if request.method=="POST" and request.POST:
-        data=request.POST
-        username=data.get("username")
-        email=data.get("email")
-        password=data.get("password")
-        existed_user = User.objects.filter(username = username)
-        if(existed_user.count() > 0):
+    if request.method == "POST" and request.POST:
+        data = request.POST
+        username = data.get("username")
+        email = data.get("email")
+        password = data.get("password")
+        existed_user = User.objects.filter(username=username)
+        if existed_user.count() > 0:
             return render(request, 'login/register.html', {'error_message': "Username has been used.",})   
         user = User.objects.create(
             username=username,
@@ -35,7 +35,7 @@ def register_process(request):
             email=email,
         )
         user.save()
-        return HttpResponseRedirect(reverse('main_page:main_pg', args = (user.id,)))
+        return HttpResponseRedirect(reverse('main_page:main_pg', args=(user.id,)))
     return render(request, 'login/index.html', {'error_message': "Not post data,"})
 
 

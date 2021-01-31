@@ -1,4 +1,16 @@
 from django.db import models
+from enum import Enum
+
+
+class VehicleType(Enum):
+    Sedan = 1,
+    Coupe = 2,
+    SportsCar = 3,
+    SUV = 4,
+    Minivan = 5,
+    PickupTruck = 6,
+    Hatchback = 7
+
 
 # Create your models here.
 class User(models.Model):
@@ -9,10 +21,10 @@ class User(models.Model):
 
 
 class Driver(models.Model):
-     user = models.OneToOneField(User, primary_key = True, on_delete = models.CASCADE)
-     type = models.IntegerField()
-     plate_num = models.CharField(max_length=50)
-     capacity = models.IntegerField()
+    user = models.OneToOneField(User, primary_key = True, on_delete = models.CASCADE)
+    type = models.IntegerField()
+    plate_num = models.CharField(max_length=50)
+    capacity = models.IntegerField()
 
 
 class Ride(models.Model):
