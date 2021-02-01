@@ -60,7 +60,6 @@ def user_login(request):
 @login_required(redirect_field_name='next', login_url='login:index')
 def homepage(request):
     return render(request, 'login/homepage.html', {'user':request.user})
-
     # if request.user.is_authenticated:
     #     return render(request, 'login/homepage.html', {'user':request.user})
     # else:
