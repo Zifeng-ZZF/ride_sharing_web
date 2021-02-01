@@ -56,7 +56,21 @@
             </div>
             <div>
                 <label>type:</label>
-                <b>{{ driver.type }}</b>
+                {% if driver.type == 0 %}
+                <b>{{ "Sedan" }}</b>
+                {% elif driver.type == 1 %}
+                <b>{{ "Coupe" }}</b>
+                {% elif driver.type == 2 %}
+                <b>{{ "Sports Car" }}</b>
+                {% elif driver.type == 3 %}
+                <b>{{ "SUV" }}</b>
+                {% elif driver.type == 4 %}
+                <b>{{ "Minivan" }}</b>
+                {% elif driver.type == 5 %}
+                <b>{{ "Pickup Truck" }}</b>
+                {% elif driver.type == 6 %}
+                <b>{{ "Hatchback" }}</b>
+                {% endif %}
             </div>
             <div>
                 <label>capacity:</label>
