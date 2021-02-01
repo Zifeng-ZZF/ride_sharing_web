@@ -11,27 +11,26 @@ from django.contrib.auth.models import User, Permission
 
 
 class Driver(models.Model):
-    user = models.OneToOneField(User, primary_key = True, on_delete = models.CASCADE)
+    user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
     type = models.IntegerField()
     plate_num = models.CharField(max_length=50)
     capacity = models.IntegerField()
 
 
 class Ride(models.Model):
-    owner = models.ForeignKey(User, on_delete = models.CASCADE)
-    driver = models.ForeignKey(Driver, on_delete = models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
     sharer = models.IntegerField()
     status = models.IntegerField()
-    can_share = models.BooleanField(default = True)
+    can_share = models.BooleanField(default=True)
     departure_time = models.DateField()
     total_passenger_num = models.IntegerField()
-    destination = models.CharField(max_length = 200)
+    destination = models.CharField(max_length=200)
     vehicle_type = models.IntegerField()
-    special_request = models.CharField(max_length = 200)
+    special_request = models.CharField(max_length=200)
 
     class Meta:
         # 自定义的权限，两参数分别是权限的名字和权限的描述
         permissions = (
             ("isDriver", "search as driver"),
-          
         )

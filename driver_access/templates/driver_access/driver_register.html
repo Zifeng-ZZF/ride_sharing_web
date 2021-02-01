@@ -19,7 +19,7 @@
 <div class="container" id="main_page">
     <h1 class="title" style="background-color: azure">Be a driver on rideShare! Join us, {{ user.username }}.</h1>
     <div class="container" id="form_wrap">
-        <form class="form" action="{% url 'driver_access:driver_reg' user.id %}" method="post" id="reg_form">
+        <form class="form" action="{% url 'driver_access:driver_reg' %}" method="post" id="reg_form">
              {% csrf_token %}
             <fieldset>
                 <h2><b>Vehicle Information</b></h2>
@@ -43,6 +43,7 @@
                     <label class="info_lb">Plate number</label>
                     <input name="plate" placeholder="your plate no." maxlength="10" class="form-control" type="text" required>
                     {% if err_plate %}<label style="color: red">{{ "illegal characters. Please enter only letters and numbers." }}</label>{% endif %}
+                    {% if err_plate_num %}<label style="color: red">{{ err_plate_num }}</label>{% endif %}
                 </div>
 
                 <div class="form-group">
@@ -56,7 +57,7 @@
                     <button type="submit" class="btn btn-warning" name="register" id="register">
                         Register
                     </button>
-                    <a class="btn btn-secondary" href="{% url 'main_page:main_pg' user.id %}" name="cancel" id="cancel">
+                    <a class="btn btn-secondary" href="{% url 'main_page:main_pg' %}" name="cancel" id="cancel">
                         Cancel
                     </a>
                 </div>
