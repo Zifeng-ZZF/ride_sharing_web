@@ -1,11 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User, Permission
 
 # Create your models here.
-class User(models.Model):
-    username = models.CharField(max_length=50)
-    password = models.CharField(max_length=50)
-    is_driver = models.BooleanField(default = False)
-    email = models.CharField(max_length = 200)
+# class User(models.Model):
+#     username = models.CharField(max_length=50)
+#     password = models.CharField(max_length=50)
+#     is_driver = models.BooleanField(default = False)
+#     email = models.CharField(max_length = 200)
 
 
 class Driver(models.Model):
@@ -16,8 +17,8 @@ class Driver(models.Model):
 
 
 class Ride(models.Model):
-    owner = models.ForeignKey('User', on_delete = models.CASCADE)
-    driver = models.ForeignKey('Driver', on_delete = models.CASCADE)
+    owner = models.ForeignKey(User, on_delete = models.CASCADE)
+    driver = models.ForeignKey(Driver, on_delete = models.CASCADE)
     sharer = models.IntegerField()
     status = models.IntegerField()
     can_share = models.BooleanField(default = True)
@@ -26,3 +27,10 @@ class Ride(models.Model):
     destination = models.CharField(max_length = 200)
     vehicle_type = models.IntegerField()
     special_request = models.CharField(max_length = 200)
+
+    class Meta:
+        # 自定义的权限，两参数分别是权限的名字和权限的描述
+        permissions = (
+            ("isDriver", "search as driver"),
+          
+        )
