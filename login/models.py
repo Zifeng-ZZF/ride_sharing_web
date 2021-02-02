@@ -34,3 +34,4 @@ class Ride(models.Model):
         permissions = (
             ("isDriver", "search as driver"),
         )
+

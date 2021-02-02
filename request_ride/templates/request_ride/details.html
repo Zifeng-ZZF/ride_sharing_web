@@ -21,7 +21,7 @@
             padding: 30px;
             border-radius: 10px;
             margin-top: 5%;
-            margin-right: 10%;
+            width: 60%;
         }
 
         .title {
@@ -29,6 +29,9 @@
             padding: 5% 5% 0 5%;
             margin: 0;
             font-size: xxx-large;
+            width: 50%;
+            margin-right: 20%;
+            margin-left: 20%;
         }
 
         .form {
@@ -43,6 +46,12 @@
             margin-top: 1%;
             margin-bottom: 2%;
         }
+
+        .info_lb {
+            font-size: large;
+            text-align: right;
+            color: darkseagreen;
+        }
     </style>
 </head>
 <body>
@@ -55,37 +64,65 @@
             <fieldset>
                 <div class="form-group">
                     <label class="info_lb">Your destination:</label>
-                    <a name="address">{{ ride.destination }}</a>
+                    <b>{{ ride.destination }}</b>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 4%;">
                     <label class="info_lb">Arrival date & time</label>
-                    <a name="address">{{ ride.destination }}</a>
+                    <b>{{ ride.departure_time }}</b>
                 </div>
 
                 <div class="form-group">
                     <label class="info_lb">Number of passengers</label>
-                    <a name="address">{{ ride.destination }}</a>
+                    <b>{{ ride.total_passenger_num }}</b>
                 </div>
 
                 <div class="form-group">
-                    <label class="info_lb">Vehicle Type</label>
-                    <a name="address">{{ ride.destination }}</a>
+                    <div class="container" style="margin: 0; padding: 0;">
+                        <label class="info_lb">Preferred vehicle Type:</label>
+                        {% if ride.vehicle_type == 0 %}
+                        <b>{{ "Sedan" }}</b>
+                        {% elif ride.vehicle_type == 1 %}
+                        <b>{{ "Coupe" }}</b>
+                        {% elif ride.vehicle_type == 2 %}
+                        <b>{{ "Sports Car" }}</b>
+                        {% elif ride.vehicle_type == 3 %}
+                        <b>{{ "SUV" }}</b>
+                        {% elif ride.vehicle_type == 4 %}
+                        <b>{{ "Minivan" }}</b>
+                        {% elif ride.vehicle_type == 5 %}
+                        <b>{{ "Pickup Truck" }}</b>
+                        {% elif ride.vehicle_type == 6 %}
+                        <b>{{ "Hatchback" }}</b>
+                        {% endif %}
+                    </div>
+                    <div class="container" style="padding: 0; margin: 0;">
+                        <label class="info_lb">Actual vehicle Type:</label>
+                        {% if ride.driver %}
+                        <b name="actual_vehicle">{{ ride.driver.type }}</b>
+                        {% else %}
+                        <b name="actual_vehicle">{{"Undecided"}}</b>
+                        {% endif %}
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="info_lb">Do you want to share this ride with others?</label>
-                    <a name="address">{{ ride.destination }}</a>
+                    <label class="info_lb">Can be shared:</label>
+                    {% if ride.can_share %}
+                    <b name="address">{{ "Yes" }}</b>
+                    {% else %}
+                    <b name="address">{{ "No" }}</b>
+                    {% endif %}
                 </div>
 
                 <div class="form-group">
                     <label class="info_lb">Other:</label>
-                    <a name="address">{{ ride.destination }}</a>
+                    <b>{{ ride.special_request }}</b>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="info_lb">Sharer info:</label>
-                    <a name="address">{{ ride.destination }}</a>
+                    <b>{{ ride.sharer }}</b>
                 </div>
 
                 <!-- Button -->
