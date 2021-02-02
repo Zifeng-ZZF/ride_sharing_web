@@ -1,16 +1,17 @@
 from django.shortcuts import render
 from login.models import Driver, Ride
 from django.contrib.auth.models import User, Permission
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse
 
 
 # Create your views here.
+@login_required
 def driver_access(request):
     user = request.user
     if user.is_authenticated:
         if user.has_perm('login.isDriver'):
-            print("  ------------ has become driver")
             try:
                 driver = Driver.objects.get(pk=user.id)
             except Driver.DoesNotExist:
@@ -28,6 +29,7 @@ def driver_access(request):
 
 # handle driver register form, process any invalid inputs if any
 # create a driver and put into the DB if input is valid
+@login_required
 def handle_register_request(request):
     user = request.user
     if not user.is_authenticated:
@@ -63,7 +65,6 @@ def handle_register_data(request, context, user):
     user.user_permissions.add(perm)  # grant permission after registering
     user.save()
     driver.save()
-    print("  ------------------  succesfully registered ... ")
     return HttpResponseRedirect(reverse('driver_access:driver_access'))
 
 
