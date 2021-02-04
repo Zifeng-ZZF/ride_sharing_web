@@ -106,19 +106,16 @@
         <div class="container" id="request_list_part">
             <h2 style="padding: 2%;">Open requests:</h2>
             <div class="container" id="request_list" style="height: 100%">
-                <form method="get" action="{% url 'driver_access:detail_form_handle' %}" style="height: 100%">
-                    {% csrf_token %}
-                    <ul style=" width: 100%; max-width: 100%; height: 80%; overflow: scroll;">
-                        {% for ride in rides %}
-                        <li class="mybtn">
-                            <label style="float: left; width: 40%">{{ ride.destination }}</label>
-                            <label style="float: left; width: 40%;">{{ ride.departure_time }}</label>
-                            <a style="float: left; width: 20%" type="button" id="item"
-                               class="btn cbtn" href="{% url 'driver_access:claim_handle' ride.id %}">claim</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </form>
+                <ul style=" width: 100%; max-width: 100%; height: 80%; overflow: scroll;">
+                    {% for ride in rides %}
+                    <li class="mybtn">
+                        <label style="float: left; width: 40%">{{ ride.destination }}</label>
+                        <label style="float: left; width: 40%;">{{ ride.departure_time }}</label>
+                        <a style="float: left; width: 20%" type="button" id="item"
+                           class="btn cbtn" href="{% url 'driver_access:claim_handle' ride.id %}">claim</a>
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>

@@ -141,6 +141,5 @@ def handle_claim(request, ride_id):
 
 # on click of driver's own rides and display the details
 def handle_detail_form(request, ride_id):
-    print("Handling detail form")
-    return render(request, 'request_ride/details.html', args=ride_id)
-
+    print("Handling detail form click on ride: ", ride_id)
+    return render(request, 'request_ride/details.html', { 'ride_id': ride_id })
