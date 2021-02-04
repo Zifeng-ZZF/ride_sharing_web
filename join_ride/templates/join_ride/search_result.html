@@ -44,7 +44,7 @@
                     <td>{{i.departure_time}}</td>
                     <td>{{i.destination}}</td>
                     <td>Unconfirmed</td>
-                    <td><a type="button" class="btn" id="home" href="{% url 'join_ride:request_process' i.id %}">Join</a></td>
+                    <td><a type="button" class="btn" id="home" href="{% url 'join_ride:request_process' i.id p_num %}">Join</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
