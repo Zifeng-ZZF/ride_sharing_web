@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.models import User
 
@@ -18,7 +18,7 @@ def main_page(request):
 def direct_func_buttons(request):
     if request.user.is_authenticated:
         if request.GET.get('my_ride_btn'):
-            return HttpResponseRedirect(reverse('my_ride:my_ride'))
+            return HttpResponseRedirect(reverse('my_ride:my_ride', args=(0, )))
         elif request.GET.get('request_ride_btn'):
             return HttpResponseRedirect(reverse('request_ride:request_ride'))
         elif request.GET.get('join_ride_btn'):
