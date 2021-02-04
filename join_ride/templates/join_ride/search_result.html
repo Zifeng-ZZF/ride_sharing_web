@@ -19,26 +19,14 @@
             background-color: azure;
             border-radius: 5px;
         }
-        
     </style>
 </head>
 <body  style="padding: 0; height: 100%; width: 100%">
-    <h1 class = "title">Your Rides</h1>
+    <h1 class = "title">Search Results</h1>
     <div class="container" style="height: 30px; margin: 0 auto 0 0;">
         <a type="button" class="btn" id="home" href="{% url 'main_page:main_pg' %}">
             Home
         </a>
-    </div>
-    <div class="btn-group">
-        <button type="button"style=" margin-left: 20px; margin-top: 20px;" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            Filter <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-            <li><a href="{% url  'my_ride:my_ride' 0%}">All</a></li>
-            <li><a href="{% url  'my_ride:my_ride' 1%}">Unconfirmed</a></li>
-            <li><a href="{% url  'my_ride:my_ride' 2%}">Confirmed</a></li>
-            <li><a href="{% url  'my_ride:my_ride' 3%}">Finshed</a></li>
-        </ul>
     </div>
     <div>
         <table class="table table-striped">
@@ -53,15 +41,10 @@
             <tbody>
                 {% for i in ans %}
                 <tr>
-                    <td><a href="{% url  'request_ride:request_display' i.id%}" class="list-group-item">{{i.departure_time}}</a> </td>
-                    <td><a href="{% url  'request_ride:request_display' i.id%}" class="list-group-item">{{i.destination}}</a></td>
-                    {% if i.status == 0 %}
+                    <td>{{i.departure_time}}</td>
+                    <td>{{i.destination}}</td>
                     <td>Unconfirmed</td>
-                    {% elif i.status == 1 %}
-                    <td>Confirmed</td>
-                    {% else %}
-                    <td>Fnished</td>
-                    {% endif %}
+                    <td><a type="button" class="btn" id="home" href="{% url 'join_ride:request_process' i.id %}">Join</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

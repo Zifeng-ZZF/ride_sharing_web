@@ -3,5 +3,5 @@ from . import views
 
 app_name = 'my_ride'
 urlpatterns = [
-    path('<int:user_id>/', views.my_ride, name='my_ride'),
+    path('<int:mode>/', views.my_ride, name='my_ride'),
 ]

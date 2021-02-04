@@ -3,5 +3,7 @@ from . import views
 
 app_name = 'join_ride'
 urlpatterns = [
-    path('<int:user_id>/', views.join_ride, name='join_ride'),
+    path('', views.join_ride, name='join_ride'),
+    path('search/', views.search, name='search'),
+    path('<int:ride_id>/request_process/', views.request_process, name='request_process'),
 ]

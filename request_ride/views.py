@@ -43,6 +43,7 @@ def handle_request(request):
 
 @login_required
 def display_detail(request, ride_id):
+    print("get in")
     if request.user.is_authenticated:
         try:
             ride = Ride.objects.get(pk=ride_id)
@@ -73,10 +74,11 @@ def same_ride_checker(user, depart_time, destination):
 
 # iterating the sharer, checking user's identity
 # return true if he is sharer, false otherwise
+#Modified by yifan. user username to check
 def is_sharer(user, ride):
     sharer_list = ride.sharer
     for sharer in sharer_list:
-        if sharer == user.id:
+        if sharer == user.username:
             return True
     return False
 
