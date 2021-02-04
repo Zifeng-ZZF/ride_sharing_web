@@ -21,7 +21,7 @@ class Ride(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE, blank=True, null=True)
     sharer = models.JSONField(blank=True, null=True)
-    status = models.IntegerField()
+    status = models.IntegerField()  # 0=open, 1=confirmed, 2=complete
     can_share = models.BooleanField(default=True)
     departure_time = models.DateTimeField()
     total_passenger_num = models.IntegerField()

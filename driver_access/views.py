@@ -6,7 +6,8 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse
 
 
-# Create your views here.
+# driver access view, if user is driver and possess the drive, detail
+# of vehicle info and list of rides will be presented
 @login_required
 def driver_access(request):
     user = request.user
@@ -19,7 +20,7 @@ def driver_access(request):
             confirmed_rides = Ride.objects.filter(driver=driver)
             context = {
                 'driver': driver,
-                'rides': confirmed_rides,
+                'rides': list(confirmed_rides),
             }
             return render(request, 'driver_access/driver_access.html', context)
         return render(request, 'driver_access/driver_register.html', {})
@@ -92,3 +93,54 @@ def check_valid(context, data):
             context['err_cap'] = True
             has_err = True
     return context, has_err
+
+
+# enter search page and render search page by listing all rides that the
+# driver is the current user
+def on_search(request):
+    if request.user.is_authenticated:
+        user = request.user
+        driver = Driver.objects.get(pk=user)
+        open_rides_list = validate_rides(driver, user)
+        context = {
+            'driver': driver,
+            'rides': open_rides_list,
+        }
+        return render(request, 'driver_access/driver_search.html', context)
+    return HttpResponseRedirect(reverse('driver_access:driver_access'))
+
+
+# filtering rides that meet the driver's vehicle type, capacity
+# and the ride must be "open" and has no driver yet
+# the driver can't be the owner or the sharer
+def validate_rides(driver, user):
+    open_rides = Ride.objects.filter(status=0, vehicle_type=driver.type, total_passenger_num__lte=driver.capacity,
+                                     driver=None)
+    open_rides = open_rides.exclude(owner=user)
+    open_list = []
+    for ride in open_rides:
+        if user.username not in ride.sharer:
+            open_list.append(ride)
+    return open_list
+
+
+# handle claim request from driver who pick a ride to confirm
+# change the ride status and notify participants via email
+def handle_claim(request, ride_id):
+    if request.user.is_authenticated:
+        user = request.user
+        ride = Ride.objects.get(pk=ride_id)
+        ride.status = 1
+        ride.driver = Driver.objects.get(pk=user)
+        ride.save()
+        print("-------------- successfully claimed: ", ride_id)
+        # return to the page with refreshed list
+        return HttpResponseRedirect(reverse('driver_access:on_search'))
+    return render(request, 'login/index.html', {'error_message': "Username not logged in."})
+
+
+# on click of driver's own rides and display the details
+def handle_detail_form(request, ride_id):
+    print("Handling detail form")
+    return render(request, 'request_ride/details.html', args=ride_id)
+

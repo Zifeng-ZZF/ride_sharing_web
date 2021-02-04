@@ -74,7 +74,7 @@ def same_ride_checker(user, depart_time, destination):
 
 # iterating the sharer, checking user's identity
 # return true if he is sharer, false otherwise
-#Modified by yifan. user username to check
+# Modified by yifan. user username to check
 def is_sharer(user, ride):
     sharer_list = ride.sharer
     for sharer in sharer_list:
