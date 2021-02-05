@@ -79,7 +79,46 @@ def is_sharer(user, ride):
     return False
 
 
+# on entering edit pages, based on role of request to show different options to edit
 @login_required
 def edit(request, ride_id):
-    return render(request, 'request_ride/edit.html', {})
+    if request.user.is_authenticated:
+        ride = Ride.objects.get(pk=ride_id)
+        ride_request = Request.objects.get(user=request.user, belong_to=ride)
+        context = {
+            'ride': ride,
+            'request': ride_request,
+        }
+        return render(request, 'request_ride/edit.html', context)
+    return render(request, 'login/index.html', {'error_message': "Username not logged in."})
+
+
+# on save edit changes, update corresponding data in the database based on the request role
+# owner/sharer update info, driver complete the tasks
+@login_required
+def handle_edit(request, request_id):
+    if request.user.is_authenticated:
+        ride_request = Request.objects.get(pk=request_id)
+        if request.POST:
+            data = request.POST
+            ride = Ride.objects.get(pk=ride_request.belong_to.id)
+            if ride_request.role == 0:
+                ride.destination = data['dest']
+                ride.departure_time = data['date_time']
+                ride.vehicle_type = data['vehicle_type']
+                ride.special_request = data['special']
+                ride.total_passenger_num -= ride_request.passenger_num;
+                ride.total_passenger_num += int(data['pass'])
+                ride.can_share = data['share']
+                ride_request.passenger_num = int(data['pass'])
+                ride_request.save()
+            elif ride_request.role == 1:
+                ride.can_share = data['share']
+            elif ride_request.role == 2:
+                ride.status = 2
+                ride.save()
+                return HttpResponseRedirect(reverse('driver_access:complete', args=(ride.id, )))
+            ride.save()
+        return render(request, 'request_ride/details.html', {'ride': ride, })
+    return render(request, 'login/index.html', {'error_message': "Username not logged in."})
 

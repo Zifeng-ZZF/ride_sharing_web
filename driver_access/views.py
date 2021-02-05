@@ -160,3 +160,13 @@ def handle_detail_form(request, ride_id):
         }
         return render(request, 'request_ride/details.html', context)
     return render(request, 'login/index.html', {'error_message': "Username not logged in."})
+
+
+# on complete the ride, notify all the participants the ride is complete via email
+@login_required
+def on_complete(request, ride_id):
+    print("Complete a ride !!! : ", ride_id)
+    ride = Ride.objects.get(pk=ride_id)
+    # delete all requests related to the ride
+    Request.objects.filter(belong_to=ride).delete()
+    return render(request, 'driver_access/driver_access.html')

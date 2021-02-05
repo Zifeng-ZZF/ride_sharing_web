@@ -120,9 +120,14 @@
                 <ul style=" width: 100%; max-width: 100%; height: 80%; overflow: scroll;">
                     {% for ride in rides %}
                     <li class="mybtn">
-                        <a type="button" id="item"
-                           class="btn cbtn" href="{% url 'driver_access:detail_form_handle' ride.id %}">
-                            <b>{{ ride.departure_time }}</b>   ----   {{ ride.destination }}  ----  {{ ride.status }}
+                        <a type="button" id="item" class="btn cbtn" href="{% url 'driver_access:detail_form_handle' ride.id %}">
+                            <b style="float: left">{{ ride.departure_time }}</b>
+                            <b style="float: left">{{ ride.destination }}</b>
+                            {% if ride.status == 1 %}
+                            <b style="color: cornflowerblue; float: right">{{"confirmed"}}</b>
+                            {% elif ride.status == 2 %}
+                            <b style="color: palegreen; float: right;">{{"complete"}}</b>
+                            {% endif %}
                         </a>
                     </li>
                     {% endfor %}

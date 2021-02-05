@@ -16,6 +16,13 @@
             background-repeat: repeat;
         }
 
+        #home {
+            font-size: large;
+            font-style: normal;
+            background-color: cornflowerblue;
+            border-radius: 5px;
+        }
+
         #form_wrap {
             background: white;
             padding: 30px;
@@ -57,13 +64,18 @@
 <body>
 
 <div class="container" id="main_page">
+     <a type="button" class="btn" id="home" href="/main/">
+            Home
+    </a>
     <h1 class="title">Ride details</h1>
+
     <div class="container" id="form_wrap">
+
         <form class="form" action="{% url 'request_ride:edit' ride.id %}" method="get" id="view_form">
              {% csrf_token %}
             <fieldset>
                 <div class="form-group">
-                    <label class="info_lb">Your destination:</label>
+                    <label class="info_lb">Destination:</label>
                     <b>{{ ride.destination }}</b>
                 </div>
 
@@ -116,6 +128,19 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="info_lb">Status:</label>
+                    {% if ride.status == 0 %}
+                    <b>{{ "open" }}</b>
+                    {% elif ride.status == 1 %}
+                    <b>{{ "confirmed" }}</b>
+                    {% elif ride.status == 2 %}
+                    <b>{{ "complete" }}</b>
+                    {% else %}
+                    <b>{{ "unknown status" }}</b>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
                     <label class="info_lb">Other:</label>
                     <b>{{ ride.special_request }}</b>
                 </div>
@@ -137,9 +162,11 @@
 
                 <!-- Button -->
                 <div class="form-group" style="margin-top: 3%">
+                    {% if ride.status == 0 or ride.status == 1 %}
                     <button type="submit" class="btn btn-warning" name="edit" id="edit">
                         Edit
                     </button>
+                    {% endif %}
                     <a class="btn btn-secondary" onClick="javascript:history.go(-1);" name="back" id="back">
                         Back
                     </a>
