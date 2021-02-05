@@ -21,6 +21,17 @@
             padding: 5%;
             margin-right: 10%;
             margin-left: 10%;
+            background: rgba(0,0,0,.9);
+            color: white;
+        }
+        .title a {
+            background: white;
+            color: black;
+            padding: 0 4px 0 4px;
+            border-radius: 3px;
+        }
+        .title a:hover {
+            background: cyan;
         }
         .mybtn {
             padding: 3px;
@@ -78,7 +89,10 @@
 </head>
 <body>
 <div class="container" id="main_page">
-    <h1 class="title" style="background-color: azure">Hello, {{ user.username }}!</h1>
+    <div class="title">
+        <h1>Hello, {{ user.username }}!</h1>
+        <a type="button" href="">log out</a>
+    </div>
     <div class="container" id="form_wrap">
         <form method="get" action="{% url 'main_page:redir' %}" style="
             height: 100%;
