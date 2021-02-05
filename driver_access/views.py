@@ -169,4 +169,9 @@ def on_complete(request, ride_id):
     ride = Ride.objects.get(pk=ride_id)
     # delete all requests related to the ride
     Request.objects.filter(belong_to=ride).delete()
-    return render(request, 'driver_access/driver_access.html')
+    driver = Driver.objects.get(user=request.user)
+    context = {
+        'driver': driver,
+        'ride': ride,
+    }
+    return render(request, 'driver_access/driver_access.html', context)

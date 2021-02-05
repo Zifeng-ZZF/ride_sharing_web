@@ -22,7 +22,7 @@ def handle_request(request):
         if request.POST:
             data = request.POST
             if same_ride_checker(request.user, data['date_time'],  data['address']):
-                return HttpResponseRedirect(reverse('main_page:main_pg'))
+                return render(request, 'request_ride/request_ride.html', {'err_msg': "Same request has been created!!!!"})
             can_share = data['share']
             departure_time = data['date_time']
             total_passenger_num = data['num_pass']

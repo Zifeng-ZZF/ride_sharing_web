@@ -99,6 +99,10 @@
                     <input name="other" placeholder="other requirements"  maxlength="200" class="form-control" type="text">
                 </div>
 
+                {% if err_msg %}
+                <h4 style="color:red;">{{ err_msg }}</h4>
+                {% endif %}
+
                 <!-- Button -->
                 <div class="form-group" style="margin-top: 3%">
                     <button type="submit" class="btn btn-warning" name="register" id="register">
