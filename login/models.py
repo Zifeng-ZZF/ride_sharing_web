@@ -35,3 +35,9 @@ class Ride(models.Model):
             ("isDriver", "search as driver"),
         )
 
+
+class Request(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    role = models.IntegerField()  # 0=owner, 1=sharer, 2=driver
+    belong_to = models.ForeignKey(Ride, on_delete=models.CASCADE)
+    passenger_num = models.IntegerField()

@@ -59,7 +59,7 @@
 <div class="container" id="main_page">
     <h1 class="title">Ride details</h1>
     <div class="container" id="form_wrap">
-        <form class="form" action="{% url 'request_ride:edit' %}" method="get" id="view_form">
+        <form class="form" action="{% url 'request_ride:edit' ride.id %}" method="get" id="view_form">
              {% csrf_token %}
             <fieldset>
                 <div class="form-group">
@@ -120,10 +120,20 @@
                     <b>{{ ride.special_request }}</b>
                 </div>
 
+<!--                only driver can see list of sharer-->
+                {% if user == ride.driver.user %}
                 <div class="form-group">
                     <label class="info_lb">Sharer info:</label>
-                    <b>{{ ride.sharer }}</b>
+                    <div class="scroll_share">
+                        {% for sharer in sharers %}
+                        <div class="sharer_info">
+                            <label><b>{{ sharer.username }}</b></label>
+                            <a>{{ "passenger?" }}</a>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
+                {% endif %}
 
                 <!-- Button -->
                 <div class="form-group" style="margin-top: 3%">

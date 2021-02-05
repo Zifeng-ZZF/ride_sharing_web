@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from login.models import Driver, Ride
+from login.models import Driver, Ride, Request
 from django.contrib.auth.models import User, Permission
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
@@ -24,8 +24,7 @@ def driver_access(request):
             }
             return render(request, 'driver_access/driver_access.html', context)
         return render(request, 'driver_access/driver_register.html', {})
-    else:
-        return render(request, 'login/index.html', {'error_message': "Username not logged in."})
+    return render(request, 'login/index.html', {'error_message': "Username not logged in."})
 
 
 # handle driver register form, process any invalid inputs if any
@@ -97,6 +96,7 @@ def check_valid(context, data):
 
 # enter search page and render search page by listing all rides that the
 # driver is the current user
+@login_required
 def on_search(request):
     if request.user.is_authenticated:
         user = request.user
@@ -126,6 +126,7 @@ def validate_rides(driver, user):
 
 # handle claim request from driver who pick a ride to confirm
 # change the ride status and notify participants via email
+@login_required
 def handle_claim(request, ride_id):
     if request.user.is_authenticated:
         user = request.user
@@ -133,6 +134,8 @@ def handle_claim(request, ride_id):
         ride.status = 1
         ride.driver = Driver.objects.get(pk=user)
         ride.save()
+        ride_request = Request.objects.create(user=request.user, role=2, belong_to=ride, passenger_num=0)
+        ride_request.save()
         print("-------------- successfully claimed: ", ride_id)
         # return to the page with refreshed list
         return HttpResponseRedirect(reverse('driver_access:on_search'))
@@ -140,6 +143,20 @@ def handle_claim(request, ride_id):
 
 
 # on click of driver's own rides and display the details
+# listing sharers information and pass to template
+@login_required
 def handle_detail_form(request, ride_id):
-    print("Handling detail form click on ride: ", ride_id)
-    return render(request, 'request_ride/details.html', {'ride_id': ride_id})
+    if request.user.is_authenticated:
+        print("Handling detail form click on ride: ", ride_id)
+        ride = Ride.objects.get(pk=ride_id)
+        sharers = []
+        sharers_names = list(ride.sharer)
+        for name in sharers_names:
+            temp = User.objects.get(username=name)
+            sharers.append(temp)
+        context = {
+            'ride': ride,
+            'sharers': sharers,
+        }
+        return render(request, 'request_ride/details.html', context)
+    return render(request, 'login/index.html', {'error_message': "Username not logged in."})
