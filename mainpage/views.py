@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.contrib.auth import logout
+
 
 
 # Create your views here.
@@ -27,4 +29,11 @@ def direct_func_buttons(request):
             return HttpResponseRedirect(reverse('driver_access:driver_access'))
     else:
         return render(request, 'login/index.html', {'error_message': "Username not exist."})
+
+
+
+def log_out(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('login:index'))
+    # Redirect to a success page.
 

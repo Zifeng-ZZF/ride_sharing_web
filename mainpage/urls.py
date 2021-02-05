@@ -6,4 +6,5 @@ app_name = 'main_page'
 urlpatterns = [
     path('', views.main_page, name='main_pg'),
     path('redirect/', views.direct_func_buttons, name='redir'),
+    path('log_out/', views.log_out, name='log_out'),
 ]

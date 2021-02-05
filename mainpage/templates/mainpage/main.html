@@ -91,7 +91,7 @@
 <div class="container" id="main_page">
     <div class="title">
         <h1>Hello, {{ user.username }}!</h1>
-        <a type="button" href="">log out</a>
+        <a type="button" href="{% url 'main_page:log_out' %}">log out</a>
     </div>
     <div class="container" id="form_wrap">
         <form method="get" action="{% url 'main_page:redir' %}" style="
