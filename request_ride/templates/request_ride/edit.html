@@ -150,6 +150,11 @@
                     </button>
                     {% elif request.role == 2 %}
                     <input type="submit" class="btn btn-warning" value="Mark complete" name="complete"/>
+<!--                    <div>-->
+<!--                        <label>You can specify an email to notify others, or we will just use-->
+<!--                        <b> {{user.email}} </b></label>-->
+<!--                        <input type="text" name="new_email" maxlength="50"/>-->
+<!--                    </div>-->
                     {% endif %}
 
                     <a class="btn btn-secondary" onclick="javascript:history.go(-1);" name="cancel" id="cancel">

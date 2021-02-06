@@ -4,6 +4,8 @@ from django.contrib.auth.models import User, Permission
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse
+from django.core.mail import send_mail, BadHeaderError
+from smtplib import SMTPException, SMTPRecipientsRefused
 
 
 # driver access view, if user is driver and possess the drive, detail
@@ -170,8 +172,32 @@ def on_complete(request, ride_id):
     # delete all requests related to the ride
     Request.objects.filter(belong_to=ride).delete()
     driver = Driver.objects.get(user=request.user)
+    # sending email
+    data_tuple = handle_email(ride)
+    try:
+        send_mass_mail(data_tuple, fail_silently=False)
+    except BadHeaderError:
+        return HttpResponse('Invalid header found.')
+    except SMTPException as e:
+        print(e)
+    # refreshing ..
     context = {
         'driver': driver,
         'ride': ride,
     }
     return render(request, 'driver_access/driver_access.html', context)
+
+
+# prepare email data
+def get_email_data(request, ride):
+    subject = "Confirmed ride"
+    content = "Ride to " + ride.destination + " at " + ride.departure_time + " is confirmed by driver <b>" + \
+              request.user.username + "</b>."
+    data_list = [
+        (subject, content, None, ride.owner.email),
+        (subject, content, None, request.user.email),
+    ]
+    for sharer_name in ride.sharer:
+        temp_tuple = (subject, content, None, User.objects.get(username=sharer_name).email)
+        data_list.append(temp_tuple)
+    return tuple(data_list)

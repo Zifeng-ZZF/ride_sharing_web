@@ -135,3 +135,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_USE_SSL = True
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'xxx@qq.com'  # 邮箱账号
+EMAIL_HOST_PASSWORD = 'xxxx'  # 授权码
+DEFAULT_FROM_EMAIL = 'rideShare <xxx@qq.com>'
