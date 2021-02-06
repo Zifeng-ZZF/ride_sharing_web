@@ -28,15 +28,12 @@ def search(request):
             date_time_to = data['date_time_to']
             total_passenger_num = data['num_pass']
             destination = data['address']
-            ride = Ride.objects.filter(Q(destination__icontains=destination) & Q(departure_time__range=(date_time_from, date_time_to)) & Q(status = 0))
+            ride = Ride.objects.filter(Q(destination__icontains = destination) & Q(departure_time__range = (date_time_from, date_time_to)) & Q(status = 0))
             #search the rides where user is in
             request_list = Request.objects.filter(user = request.user)
             ride_list = []
             for ride_request in request_list:
                 ride_list.append(ride_request.belong_to.id)
-            #all_rides_list = Ride.objects.filter(id__in = ride_list)
-            #all_rides_list = Ride.objects.filter(Q(owner = request.user) | Q(sharer__has_any_keys=[request.user.username]))
-            #rides, which user is already in, should not be displayed
             ride = Ride.objects.exclude(id__in=ride_list)
             return render(request, 'join_ride/search_result.html', {'ans':ride, 'p_num':total_passenger_num})
 
