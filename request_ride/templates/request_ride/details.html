@@ -24,7 +24,7 @@
         }
 
         #form_wrap {
-            background: white;
+            background: rgba(255,255,255,.9);
             padding: 30px;
             border-radius: 10px;
             margin-top: 5%;
@@ -57,7 +57,7 @@
         .info_lb {
             font-size: large;
             text-align: right;
-            color: darkseagreen;
+            color: #722b47;
         }
     </style>
 </head>
@@ -75,17 +75,28 @@
              {% csrf_token %}
             <fieldset>
                 <div class="form-group">
-                    <label class="info_lb">Destination:</label>
+                    <label class="info_lb" style="color: crimson">Your role: </label>
+                    {% if user == ride.driver.user %}
+                    <b>{{ "Driver" }}</b>
+                    {% elif user == ride.owner %}
+                    <b>{{ "Owner" }}</b>
+                    {% else %}
+                    <b>{{ "Sharer" }}</b>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="info_lb">Destination: </label>
                     <b>{{ ride.destination }}</b>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 4%;">
-                    <label class="info_lb">Arrival date & time</label>
+                    <label class="info_lb">Arrival date & time: </label>
                     <b>{{ ride.departure_time }}</b>
                 </div>
 
                 <div class="form-group">
-                    <label class="info_lb">Number of passengers</label>
+                    <label class="info_lb">Number of passengers: </label>
                     <b>{{ ride.total_passenger_num }}</b>
                 </div>
 
@@ -108,10 +119,22 @@
                         <b>{{ "Hatchback" }}</b>
                         {% endif %}
                     </div>
-                    <div class="container" style="padding: 0; margin: 0;">
-                        <label class="info_lb">Actual vehicle Type:</label>
+
+                </div>
+
+                <div class="form-group" style="background: rgba(0,0,0,.1); border-radius: 3px; padding: 5px">
+                    <div class="container" style="padding: 0; margin: 0; color: midnightblue">
+                        <label class="info_lb" style="color: deepskyblue">Driver:</label>
                         {% if ride.driver %}
-                        <b name="actual_vehicle">{{ ride.driver.type }}</b>
+                        <b name="actual_vehicle">{{ ride.driver.user.username }}</b>
+                        {% else %}
+                        <b name="actual_vehicle">{{"Undecided"}}</b>
+                        {% endif %}
+                    </div>
+                    <div class="container" style="padding: 0; margin: 0; color: midnightblue">
+                        <label class="info_lb" style="color: deepskyblue">Plate number:</label>
+                        {% if ride.driver %}
+                        <b name="actual_vehicle">{{ ride.driver.plate_num }}</b>
                         {% else %}
                         <b name="actual_vehicle">{{"Undecided"}}</b>
                         {% endif %}
@@ -147,13 +170,13 @@
 
 <!--                only driver can see list of sharer-->
                 {% if user == ride.driver.user %}
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 60px;">
                     <label class="info_lb">Sharer info:</label>
                     <div class="scroll_share">
-                        {% for sharer in sharers %}
-                        <div class="sharer_info">
-                            <label><b>{{ sharer.username }}</b></label>
-                            <a>{{ "passenger?" }}</a>
+                        {% for req in requests %}
+                        <div class="sharer_info" style="float: left; padding: 5px; background: rgba(0,0,0,.1); margin-left: 3px;">
+                            <div><b>name:</b> {{ req.user.username }}</div>
+                            <div><b>passenger num:</b> {{ req.passenger_num }}</div>
                         </div>
                         {% endfor %}
                     </div>

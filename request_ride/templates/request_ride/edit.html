@@ -108,10 +108,10 @@
                     {% if request.role == 0 %}
                     <div class="container" style="padding: 0;">
                         <input name="pass" placeholder="" maxlength="2" class="form-control"
-                               value="{{ ride.total_passenger_num }}" type="text" required>
+                               value="{{ request.passenger_num }}" type="text" required>
                     </div>
                     {% else %}
-                    <b> {{ ride.total_passenger_num }} </b>
+                    <b> {{ request.passenger_num }} </b>
                     {% endif %}
                 </div>
 

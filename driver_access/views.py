@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, Permission
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse
-from django.core.mail import send_mail, BadHeaderError
+from django.core.mail import send_mail, BadHeaderError, send_mass_mail
 from smtplib import SMTPException, SMTPRecipientsRefused
 
 
@@ -149,16 +149,15 @@ def handle_claim(request, ride_id):
 @login_required
 def handle_detail_form(request, ride_id):
     if request.user.is_authenticated:
-        print("Handling detail form click on ride: ", ride_id)
         ride = Ride.objects.get(pk=ride_id)
-        sharers = []
-        sharers_names = list(ride.sharer)
-        for name in sharers_names:
+        request_list = []
+        for name in ride.sharer:
             temp = User.objects.get(username=name)
-            sharers.append(temp)
+            request_temp = Request.objects.get(user=temp, belong_to=ride)
+            request_list.append(request_temp)
         context = {
             'ride': ride,
-            'sharers': sharers,
+            'requests': request_list,
         }
         return render(request, 'request_ride/details.html', context)
     return render(request, 'login/index.html', {'error_message': "Username not logged in."})
@@ -167,37 +166,37 @@ def handle_detail_form(request, ride_id):
 # on complete the ride, notify all the participants the ride is complete via email
 @login_required
 def on_complete(request, ride_id):
-    print("Complete a ride !!! : ", ride_id)
+    user = request.user
     ride = Ride.objects.get(pk=ride_id)
-    # delete all requests related to the ride
-    Request.objects.filter(belong_to=ride).delete()
-    driver = Driver.objects.get(user=request.user)
-    # sending email
-    data_tuple = handle_email(ride)
-    try:
-        send_mass_mail(data_tuple, fail_silently=False)
-    except BadHeaderError:
-        return HttpResponse('Invalid header found.')
-    except SMTPException as e:
-        print(e)
-    # refreshing ..
+    driver = Driver.objects.get(user=user)
     context = {
         'driver': driver,
         'ride': ride,
     }
+    if ride.status == 2:  # in case of refresh resubmission
+        return render(request, 'driver_access/driver_access.html', context)
+    Request.objects.filter(belong_to=ride).delete()  # delete all requests related to the ride
+    # sending email
+    data_list = get_email_data(user, ride)
+    try:
+        send_mass_mail(data_list, fail_silently=False)
+    except BadHeaderError:
+        return HttpResponse('Invalid header found.')
+    except SMTPException as e:
+        print(e)
     return render(request, 'driver_access/driver_access.html', context)
 
 
 # prepare email data
-def get_email_data(request, ride):
-    subject = "Confirmed ride"
-    content = "Ride to " + ride.destination + " at " + ride.departure_time + " is confirmed by driver <b>" + \
-              request.user.username + "</b>."
+def get_email_data(user, ride):
+    subject = "Complete ride"
+    content = "Ride to " + ride.destination + " at " + str(ride.departure_time) + " is complete. From driver <b>" + \
+              user.username + "</b>."
     data_list = [
-        (subject, content, None, ride.owner.email),
-        (subject, content, None, request.user.email),
+        (subject, content, None, [ride.owner.email]),
+        (subject, content, None, [user.email]),
     ]
     for sharer_name in ride.sharer:
-        temp_tuple = (subject, content, None, User.objects.get(username=sharer_name).email)
+        temp_tuple = (subject, content, None, [User.objects.get(username=sharer_name).email])
         data_list.append(temp_tuple)
-    return tuple(data_list)
+    return data_list

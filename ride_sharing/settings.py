@@ -136,10 +136,17 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.163.com'
+# EMAIL_PORT = 25
+# EMAIL_HOST_USER = 'shaoyifanduke@163.com'  # 邮箱账号
+# EMAIL_HOST_PASSWORD = 'QXPIGMTSFSSFJGCI'  # 授权码
+# EMAIL_FROM = 'rideShare <shaoyifanduke@163.com>'
+# DEFAULT_FROM_EMAIL = 'rideShare <shaoyifanduke@163.com>'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.qq.com'
-EMAIL_USE_SSL = True
-EMAIL_PORT = 465
-EMAIL_HOST_USER = '15618828502@wo.cn'  # 邮箱账号
-EMAIL_HOST_PASSWORD = 'test123456.'  # 授权码
-DEFAULT_FROM_EMAIL = 'rideShare <15618828502@wo.cn>'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'finnzzf@gmail.com'
+EMAIL_HOST_PASSWORD = 'testZifeng'
