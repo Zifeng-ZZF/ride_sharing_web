@@ -116,8 +116,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="info_lb">Can be shared?</label>
-                    {% if request.role == 0 %}
+
+                    {% if request.role == 0 or request.role == 1 %}
+                    <label class="info_lb" style="color: crimson;"><b>Can be shared?</b></label>
                     <div class="container" style="padding: 0;">
                         <select name="share" class="form-control">
                             <option value="0" selected>No</option>
@@ -125,6 +126,7 @@
                         </select>
                     </div>
                     {% else %}
+                    <label class="info_lb">Can be shared?</label>
                     <b> {{ ride.can_share }} </b>
                     {% endif %}
                 </div>
