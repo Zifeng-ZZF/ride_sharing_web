@@ -176,6 +176,8 @@ def on_complete(request, ride_id):
     if ride.status == 2:  # in case of refresh resubmission
         return render(request, 'driver_access/driver_access.html', context)
     Request.objects.filter(belong_to=ride).delete()  # delete all requests related to the ride
+    ride.status = 2
+    ride.save()
     # sending email
     data_list = get_email_data(user, ride)
     try:
