@@ -203,3 +203,39 @@ def get_email_data(user, ride):
         temp_tuple = (subject, content, None, [User.objects.get(username=sharer_name).email])
         data_list.append(temp_tuple)
     return data_list
+
+
+@login_required
+def on_edit_vehicle(request):
+    if request.user.is_authenticated:
+        try:
+            driver_info = Driver.objects.get(user=request.user)
+        except DoesNotExist:
+            return render(request, "main_page/main.html", {'err_msg': "You are not a driver. "})
+        else:
+            return render(request, "driver_access/edit.html", {'driver': driver_info, })
+    return HttpResponse("User not authenticated!")
+
+
+@login_required
+def on_save_edit(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST' and request.POST:
+            data = request.POST
+            try:
+                driver_info = Driver.objects.get(user=request.user)
+            except DoesNotExist:
+                return render(request, "main_page/main.html", {'err_msg': "You are not a driver. "})
+            else:
+                driver_info.plate_num = data['plate']
+                driver_info.type = data['vehicle_type']
+                driver_info.capacity = data['cap']
+                confirmed_rides = Ride.objects.filter(driver=driver_info)
+                driver_info.save()
+                context = {
+                    'driver': driver_info,
+                    'rides': list(confirmed_rides),
+                    'success_msg': "edit successfully",
+                }
+                return render(request, 'driver_access/driver_access.html', context)
+    return HttpResponse("User not authenticated!")

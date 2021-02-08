@@ -18,7 +18,7 @@
             font-size: large;
             background-color: rgba(255,255,255,.7);
             width: 60%;
-            height: 30%;
+            height: 35%;
             padding: 40px;
             border-radius: 5px;
         }
@@ -73,6 +73,15 @@
             background: white;
             color: cadetblue;
         }
+        .edit {
+            float: right;
+            background-color: black;
+            border: none;
+        }
+        .edit:hover {
+            background-color: cyan;
+            color: black;
+        }
     </style>
 </head>
 <body style="height: 100%; width: 100%; margin: 0;">
@@ -91,25 +100,35 @@
             </div>
             <div>
                 <label>type:</label>
-                {% if driver.type == 0 %}
+                {% if driver.type == 0 or driver.type == "0" %}
                 <b>{{ "Sedan" }}</b>
-                {% elif driver.type == 1 %}
+                {% elif driver.type == 1 or driver.type == "1" %}
                 <b>{{ "Coupe" }}</b>
-                {% elif driver.type == 2 %}
+                {% elif driver.type == 2 or driver.type == "2" %}
                 <b>{{ "Sports Car" }}</b>
-                {% elif driver.type == 3 %}
+                {% elif driver.type == 3 or driver.type == "3" %}
                 <b>{{ "SUV" }}</b>
-                {% elif driver.type == 4 %}
+                {% elif driver.type == 4 or driver.type == "4" %}
                 <b>{{ "Minivan" }}</b>
-                {% elif driver.type == 5 %}
+                {% elif driver.type == 5 or driver.type == "5" %}
                 <b>{{ "Pickup Truck" }}</b>
-                {% elif driver.type == 6 %}
+                {% elif driver.type == 6 or driver.type == "6" %}
                 <b>{{ "Hatchback" }}</b>
+                {% else %}
+                <b style="color: crimson">{{ "Err: type=" }}{{ driver.type }}</b>
                 {% endif %}
             </div>
             <div>
                 <label>capacity:</label>
                 <b>{{ driver.capacity }}</b>
+            </div>
+            <div>
+                {% if success_msg %}
+                <p style="color: fuchsia">{{ success_msg }}</p>
+                {% endif %}
+            </div>
+            <div>
+                <a type="button" class="btn btn-primary edit" href="{% url 'driver_access:edit_v' %}">edit</a>
             </div>
         </div>
     </div>

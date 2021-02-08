@@ -9,4 +9,6 @@ urlpatterns = [
     path('search/', views.on_search, name='on_search'),
     path('search/<int:ride_id>/claim/', views.handle_claim, name='claim_handle'),
     path('<int:ride_id>/complete/', views.on_complete, name='complete'),
+    path('vehicle/', views.on_edit_vehicle, name='edit_v'),
+    path('vehicle/edit', views.on_save_edit, name='save'),
 ]
