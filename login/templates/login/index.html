@@ -36,7 +36,7 @@
 </head>  
 <body>
 
-  {% if message %}<p><strong>{{ message }}</strong></p>{% endif %}}
+
     <div class="main">
         <h1 class="title">rideShare - Login</h1>
         <div class="wrap">
@@ -50,8 +50,8 @@
                   <label for="pwd">Password:</label>
                   <input type="password" name="password" class="form-control" id="pwd" required>
               </div>
-              <div class="checkbox">
-                  <label><input type="checkbox"> Remember me</label>
+              <div>
+                  {% if message %}<p style="color: crimson"><strong>{{ message }}</strong></p>{% endif %}
               </div>
                 <div class="btn-group">
                     <button type="submit" class="btn btn-primary" style="padding-right: 40px">Login</button>

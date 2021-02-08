@@ -42,7 +42,7 @@ def user_login(request):
             return HttpResponseRedirect(reverse('main_page:main_pg', args=()))
         else:
             # Return an 'invalid login' error message.
-            message = 'Account does not exist！'
+            message = 'Username/Password incorrect'
             return render(request, 'login/index.html', {'message': message})
     return render(request, 'login/index.html', {})
 

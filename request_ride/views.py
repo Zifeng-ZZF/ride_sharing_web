@@ -55,9 +55,9 @@ def display_detail(request, ride_id):
             return HttpResponseRedirect(reverse('main_page:main_pg'))
         else:
             # if the current user is neither the owen nor the sharer, he cannot view this detail
-            if request.user != ride.owner and not is_sharer(request.user, ride):
-                print("This ride does not belong to the owner")
-                return HttpResponseRedirect(reverse('main_page:main_pg'))
+            # if request.user != ride.owner and not is_sharer(request.user, ride):
+            #     print("This ride does not belong to the owner")
+            #     return HttpResponseRedirect(reverse('main_page:main_pg'))
             request_list = []
             for name in ride.sharer:
                 temp = User.objects.get(username=name)

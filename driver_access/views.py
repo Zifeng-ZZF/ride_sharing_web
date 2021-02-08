@@ -169,9 +169,10 @@ def on_complete(request, ride_id):
     user = request.user
     ride = Ride.objects.get(pk=ride_id)
     driver = Driver.objects.get(user=user)
+    confirmed_rides = Ride.objects.filter(driver=driver)
     context = {
         'driver': driver,
-        'ride': ride,
+        'rides': list(confirmed_rides),
     }
     if ride.status == 2:  # in case of refresh resubmission
         return render(request, 'driver_access/driver_access.html', context)
