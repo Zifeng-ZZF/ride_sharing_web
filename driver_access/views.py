@@ -133,8 +133,13 @@ def handle_claim(request, ride_id):
     if request.user.is_authenticated:
         user = request.user
         ride = Ride.objects.get(pk=ride_id)
+        if ride.status != 0:
+            return render(request, 'main_page/main.html', {'err_msg': "The ride is already claimed!"})
+        driver = Driver.objects.get(pk=user)
+        if driver.capacity < ride.total_passenger_num or driver.type != ride.vehicle_type:
+            return render(request, 'main_page/main.html', {'err_msg': "Your vehicle does not match!"})
         ride.status = 1
-        ride.driver = Driver.objects.get(pk=user)
+        ride.driver = driver
         ride.save()
         ride_request = Request.objects.create(user=request.user, role=2, belong_to=ride, passenger_num=0)
         ride_request.save()

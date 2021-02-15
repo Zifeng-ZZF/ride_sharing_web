@@ -27,6 +27,7 @@ SECRET_KEY = 'u#90%rg*rrjsg*(sv@9hdc#d2e!w!b2nb#t1ibei)-6)3oj9*#'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'web',
     '127.0.0.1',            
     'vcm-18217.vm.duke.edu',
     '67.159.88.254',

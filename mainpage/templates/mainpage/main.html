@@ -92,7 +92,13 @@
     <div class="title">
         <h1>Hello, {{ user.username }}!</h1>
         <a type="button" href="{% url 'main_page:log_out' %}">log out</a>
+        {% if err_msg %}
+        <p style="color: crimson; font-size: xx-large">This is error{{ err_msg }}</p>
+        {% endif %}
     </div>
+
+
+
     <div class="container" id="form_wrap">
         <form method="get" action="{% url 'main_page:redir' %}" style="
             height: 100%;
