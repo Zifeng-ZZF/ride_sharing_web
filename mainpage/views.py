@@ -12,7 +12,7 @@ def main_page(request):
         context = {}
         return render(request, 'mainpage/main.html', context)
     else:
-        return render(request, 'login/index.html', {'error_message': "Username not logged in."})
+        return render(request, 'login/index.html', {'message': "Username not logged in."})
 
 
 # Listen on main page buttons and redirect them to different major functionalities
@@ -28,7 +28,7 @@ def direct_func_buttons(request):
         elif request.GET.get('driver_btn'):
             return HttpResponseRedirect(reverse('driver_access:driver_access'))
     else:
-        return render(request, 'login/index.html', {'error_message': "Username not exist."})
+        return render(request, 'login/index.html', {'message': "Username not exist."})
 
 
 

@@ -42,13 +42,15 @@ def search(request):
 @login_required(login_url='login:index')
 def request_process(request, ride_id, p_num):
     ride = Ride.objects.get(id = ride_id)
-    sharer = ride.sharer
-    sharer.append(request.user.username)
-    ride.sharer = sharer
-    ride.total_passenger_num = ride.total_passenger_num + p_num
-    ride.save()
-    ride_request = Request.objects.create(user=request.user, role=1, belong_to=ride, passenger_num = p_num)
-    ride_request.save()
-
-    return render(request, 'mainpage/main.html')
+    if ride.status == 0:
+        sharer = ride.sharer
+        sharer.append(request.user.username)
+        ride.sharer = sharer
+        ride.total_passenger_num = ride.total_passenger_num + p_num
+        ride.save()
+        ride_request = Request.objects.create(user=request.user, role=1, belong_to=ride, passenger_num = p_num)
+        ride_request.save()
+        return render(request, 'mainpage/main.html')
+    message = "Can't join the selected ride, please try again!"
+    return render(request, 'mainpage/main.html', {'message':message})
 

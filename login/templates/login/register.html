@@ -40,7 +40,7 @@
 <div class="main">
     <h1 class="title">Register</h1>
     <div class="wrap">
-          {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+          {% if message %}<p><strong>{{ message }}</strong></p>{% endif %}
          <form action="{% url 'login:register_process'  %}" method="post">
          {% csrf_token %}
          <div class="form-group">
